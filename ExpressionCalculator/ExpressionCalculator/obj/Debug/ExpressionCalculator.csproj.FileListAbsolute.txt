@@ -1,0 +1,6 @@
+D:\Учёба\Лабы\С#\ExpressionCalculator\ExpressionCalculator\bin\Debug\ExpressionCalculator.exe.config
+D:\Учёба\Лабы\С#\ExpressionCalculator\ExpressionCalculator\bin\Debug\ExpressionCalculator.exe
+D:\Учёба\Лабы\С#\ExpressionCalculator\ExpressionCalculator\bin\Debug\ExpressionCalculator.pdb
+D:\Учёба\Лабы\С#\ExpressionCalculator\ExpressionCalculator\obj\Debug\ExpressionCalculator.csprojResolveAssemblyReference.cache
+D:\Учёба\Лабы\С#\ExpressionCalculator\ExpressionCalculator\obj\Debug\ExpressionCalculator.exe
+D:\Учёба\Лабы\С#\ExpressionCalculator\ExpressionCalculator\obj\Debug\ExpressionCalculator.pdb
