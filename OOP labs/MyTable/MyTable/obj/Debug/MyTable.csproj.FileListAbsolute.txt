@@ -1,0 +1,6 @@
+D:\Учёба\Лабы\С#\MyTable\MyTable\bin\Debug\MyTable.exe.config
+D:\Учёба\Лабы\С#\MyTable\MyTable\bin\Debug\MyTable.exe
+D:\Учёба\Лабы\С#\MyTable\MyTable\bin\Debug\MyTable.pdb
+D:\Учёба\Лабы\С#\MyTable\MyTable\obj\Debug\MyTable.csprojResolveAssemblyReference.cache
+D:\Учёба\Лабы\С#\MyTable\MyTable\obj\Debug\MyTable.exe
+D:\Учёба\Лабы\С#\MyTable\MyTable\obj\Debug\MyTable.pdb
