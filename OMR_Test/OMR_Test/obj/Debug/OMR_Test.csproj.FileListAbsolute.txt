@@ -42,3 +42,6 @@ D:\Учёба\Лабы\С#\OMR_Test\OMR_Test\bin\Debug\msvcr120.dll
 D:\Учёба\Лабы\С#\OMR_Test\OMR_Test\bin\Debug\opencv_ffmpeg300_64.dll
 D:\Учёба\Лабы\С#\OMR_Test\OMR_Test\bin\Debug\opencv_ffmpeg300.dll
 D:\Учёба\Лабы\С#\OMR_Test\OMR_Test\obj\Debug\OMR_Test.Path.resources
+D:\Учёба\Лабы\projects\OMR_Test\OMR_Test\bin\Debug\OMR_Test.exe.config
+D:\Учёба\Лабы\projects\OMR_Test\OMR_Test\obj\Debug\OMR_Test.exe
+D:\Учёба\Лабы\projects\OMR_Test\OMR_Test\obj\Debug\OMR_Test.pdb

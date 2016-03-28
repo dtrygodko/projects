@@ -1,0 +1,6 @@
+D:\Учёба\Лабы\С#\FileManager\FileManager\bin\Debug\FileManager.exe.config
+D:\Учёба\Лабы\С#\FileManager\FileManager\bin\Debug\FileManager.exe
+D:\Учёба\Лабы\С#\FileManager\FileManager\bin\Debug\FileManager.pdb
+D:\Учёба\Лабы\С#\FileManager\FileManager\obj\Debug\FileManager.csprojResolveAssemblyReference.cache
+D:\Учёба\Лабы\С#\FileManager\FileManager\obj\Debug\FileManager.exe
+D:\Учёба\Лабы\С#\FileManager\FileManager\obj\Debug\FileManager.pdb
