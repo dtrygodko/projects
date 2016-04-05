@@ -7,28 +7,45 @@ namespace FileManager
 {
     class FileManager
     {
+        static FileManager manager;
+
+        public static FileManager Manager
+        {
+            get
+            {
+                if(manager == null)
+                {
+                    manager = new FileManager();
+                }
+
+                return manager;
+            }
+        }
+
         public string CurrentDirectory { get; private set; }
 
         List<char> drives = new List<char>();
 
-        static Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>
+        Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>
         {
             
         };
 
-        public FileManager()
+        public void AddCommand(string abbreviation, ICommand command)
+        {
+            commands.Add(abbreviation, command);
+        }
+
+        private FileManager()
         {
             CurrentDirectory = Directory.GetCurrentDirectory();
 
-            foreach(var drive in DriveInfo.GetDrives().Where(dr => dr.DriveType == DriveType.Fixed || dr.DriveType == DriveType.Removable))
-            {
-                drives.Add(drive.Name.ToLower()[0]);
-            }
+            RefreshDrives();
         }
 
-        public void Parse(string command)
+        public void RunCommand(string command)
         {
-
+            commands[command.Split(' ')[0]].Run(command);
         }
 
         public void ChangeDrive(char drive)
@@ -109,5 +126,18 @@ namespace FileManager
         bool WillBeRoot(string path) => path.Length == 2 ? true : false;
 
         bool IsRoot() => CurrentDirectory.Length == 3 ? true : false;
+
+        void RefreshDrives()
+        {
+            lock(drives)
+            {
+                drives.Clear();
+
+                foreach (var drive in DriveInfo.GetDrives().Where(dr => dr.DriveType == DriveType.Fixed || dr.DriveType == DriveType.Removable))
+                {
+                    drives.Add(drive.Name.ToLower()[0]);
+                }
+            }
+        }
     }
 }

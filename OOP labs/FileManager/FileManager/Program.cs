@@ -7,7 +7,7 @@ namespace FileManager
     {
         static void Main(string[] args)
         {
-            FileManager manager = new FileManager();
+            FileManager manager = FileManager.Manager;
 
            while(true)
             {
@@ -24,6 +24,10 @@ namespace FileManager
                     else if(command.Split(' ')[0] == "cd")
                     {
                         manager.ChangeDirectory(command);
+                    }
+                    else
+                    {
+                        manager.RunCommand(command);
                     }
                 }
                 catch(Exception e)
