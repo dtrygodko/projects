@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace FileManager
 {
@@ -22,7 +23,7 @@ namespace FileManager
             }
         }
 
-        public string CurrentDirectory { get; private set; }
+        public static string CurrentDirectory { get; private set; }
 
         List<char> drives = new List<char>();
 
@@ -137,6 +138,16 @@ namespace FileManager
                 {
                     drives.Add(drive.Name.ToLower()[0]);
                 }
+            }
+        }
+
+        public void RefreshAllDrives()
+        {
+            while(true)
+            {
+                RefreshDrives();
+
+                Thread.Sleep(30000);
             }
         }
     }

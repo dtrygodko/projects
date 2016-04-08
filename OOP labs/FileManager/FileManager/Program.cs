@@ -1,5 +1,6 @@
 ﻿using System;
 using static System.Console;
+using System.Threading;
 
 namespace FileManager
 {
@@ -9,11 +10,13 @@ namespace FileManager
         {
             FileManager manager = FileManager.Manager;
 
+            new Thread(new ThreadStart(manager.RefreshAllDrives)).Start();
+
            while(true)
             {
                 try
                 {
-                    Write(manager.CurrentDirectory + " ");
+                    Write(FileManager.CurrentDirectory + " ");
 
                     string command = ReadLine();
 
@@ -35,8 +38,6 @@ namespace FileManager
                     WriteLine(e.Message);
                 }
             }
-
-            //ReadKey();
         }
     }
 }
