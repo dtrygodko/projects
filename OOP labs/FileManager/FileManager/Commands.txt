@@ -1,6 +1,7 @@
 ﻿cd - change directory
-crf - create file
-crd - create directory
-del - delete file or directory
+del file - delete file
+del dir - delete directory
+crt file - create file
+crt dir - create directory
 exec - execute file
 open - open file

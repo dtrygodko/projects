@@ -29,7 +29,8 @@ namespace FileManager
 
         Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>
         {
-            
+            {"del", new DeleteEntity() },
+            {"crt", new CreateEntity() }
         };
 
         public void AddCommand(string abbreviation, ICommand command)
