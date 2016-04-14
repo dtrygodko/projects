@@ -61,66 +61,70 @@ namespace FileManager
             }
         }
 
-        public void ChangeDirectory(string path)
+        public void ChangeDirectory(string longPath)
         {
-            string[] cmdParts = path.Split(' ');
+            string[] cmdParts = longPath.Split(' ');
+            string path = "";
 
-            if (cmdParts.Length == 2)
+            if(cmdParts.Length > 2)
             {
-                string[] pathParts = cmdParts[1].Split(new string[] { @"\", "/" }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (string part in pathParts)
+                for(int i = 1; i < cmdParts.Length; ++i)
                 {
-                    if (part == "..")
-                    {
-                        if (IsRoot())
-                        {
-                            throw new ArgumentException("This is root directory, you can't navigate up");
-                        }
-                        else
-                        {
-                            string nextDirectory = CurrentDirectory.Remove(CurrentDirectory.LastIndexOf("\\"));
-                            if (WillBeRoot(nextDirectory))
-                            {
-                                nextDirectory += "\\";
-                            }
-
-                            if (Directory.Exists(nextDirectory))
-                            {
-                                CurrentDirectory = nextDirectory;
-                            }
-                            else
-                            {
-                                throw new IOException("Directory " + nextDirectory + " doesn't exist");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        string nextDirectory;
-                        if (IsRoot())
-                        {
-                            nextDirectory = CurrentDirectory + part;
-                        }
-                        else
-                        {
-                            nextDirectory = CurrentDirectory + "\\" + part;
-                        }
-
-                        if (Directory.Exists(nextDirectory))
-                        {
-                            CurrentDirectory = nextDirectory;
-                        }
-                        else
-                        {
-                            throw new IOException("Directory " + nextDirectory + " doesn't exist");
-                        }
-                    }
+                    path += cmdParts[i] + " ";
                 }
             }
             else
             {
-                throw new FormatException("Use syntax like: cd path");
+                path = cmdParts[1];
+            }
+
+            string[] pathParts = path.Split(new string[] { @"\", "/" }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string part in pathParts)
+            {
+                if (part == "..")
+                {
+                    if (IsRoot())
+                    {
+                        throw new ArgumentException("This is root directory, you can't navigate up");
+                    }
+                    else
+                    {
+                        string nextDirectory = CurrentDirectory.Remove(CurrentDirectory.LastIndexOf("\\"));
+                        if (WillBeRoot(nextDirectory))
+                        {
+                            nextDirectory += "\\";
+                        }
+
+                        SetCurrentDirectory(nextDirectory);
+                    }
+                }
+                else
+                {
+                    string nextDirectory;
+                    if (IsRoot())
+                    {
+                        nextDirectory = CurrentDirectory + part;
+                    }
+                    else
+                    {
+                        nextDirectory = CurrentDirectory + "\\" + part;
+                    }
+
+                    SetCurrentDirectory(nextDirectory);
+                }
+            }
+        }
+
+        void SetCurrentDirectory(string nextDirectory)
+        {
+            if (Directory.Exists(nextDirectory))
+            {
+                CurrentDirectory = nextDirectory;
+            }
+            else
+            {
+                throw new IOException("Directory " + nextDirectory + " doesn't exist");
             }
         }
 
