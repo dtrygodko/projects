@@ -27,13 +27,15 @@ namespace FileManager
 
         List<char> drives = new List<char>();
 
-        Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>
+        Dictionary<string, Command> commands = new Dictionary<string, Command>
         {
             {"del", new DeleteEntity() },
-            {"crt", new CreateEntity() }
+            {"crt", new CreateEntity() },
+            {"exe", new ExecuteProgram() },
+            {"ren", new RenameEntity() }
         };
 
-        public void AddCommand(string abbreviation, ICommand command)
+        public void AddCommand(string abbreviation, Command command)
         {
             commands.Add(abbreviation, command);
         }
@@ -58,7 +60,7 @@ namespace FileManager
             }
             else
             {
-                throw new ArgumentException("Drive " + drive + "doesn't exist");
+                throw new ArgumentException("Drive " + drive + " doesn't exist");
             }
         }
 

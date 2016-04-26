@@ -3,31 +3,39 @@ using System.IO;
 
 namespace FileManager
 {
-    interface ICommand
+    abstract class Command
     {
-        void Run(string text);
+        public abstract void Run(string text);
+
+        protected string GetEntityName(string[] parts, int minLength)
+        {
+            string entityName = "";
+
+            if(parts.Length > minLength)
+            {
+                for(int i = minLength - 1; i < parts.Length; ++i)
+                {
+                    entityName += parts[i] + " ";
+                }
+            }
+            else
+            {
+                entityName = parts[minLength - 1];
+            }
+
+            return entityName;
+        }
     }
 
-    abstract class CreateDelete : ICommand
+    abstract class CreateDelete : Command
     {
-        public void Run(string text)
+        public override void Run(string text)
         {
             string[] parts = text.Split(' ');
 
             if (parts[1] == "file" || parts[1] == "dir")
             {
-                string entityName = "";
-                if (parts.Length > 3)
-                {
-                    for (int i = 2; i < parts.Length; ++i)
-                    {
-                        entityName += parts[i] + " ";
-                    }
-                }
-                else
-                {
-                    entityName = parts[2];
-                }
+                string entityName = GetEntityName(parts, 3);
 
                 if (parts[1] == "file")
                 {
@@ -72,6 +80,40 @@ namespace FileManager
         protected override void DirectoryOperation(string name)
         {
             Directory.CreateDirectory(FileManager.CurrentDirectory + "\\" + name);
+        }
+    }
+
+    class ExecuteProgram : Command
+    {
+        public override void Run(string text)
+        {
+            string entityName = GetEntityName(text.Split(' '), 2);
+
+            System.Diagnostics.Process.Start(FileManager.CurrentDirectory + "\\" + entityName);
+        }
+    }
+
+    class RenameEntity : Command
+    {
+        public override void Run(string text)
+        {
+            string[] names = text.Split(new string[] {"=>", "->"}, StringSplitOptions.RemoveEmptyEntries);
+
+            string oldName = FileManager.CurrentDirectory + "\\" + GetEntityName(names[0].Split(' '), 3);
+            string newName = FileManager.CurrentDirectory + "\\" + GetEntityName(names[1].Split(' '), 1);
+
+            if (names[0].Split(' ')[1] == "dir")
+            {
+                Directory.Move(oldName, newName);
+            }
+            else if (names[0].Split(' ')[1] == "file")
+            {
+                File.Move(oldName, newName);
+            }
+            else
+            {
+                throw new ArgumentException("Use ren file/dir syntax");
+            }
         }
     }
 }

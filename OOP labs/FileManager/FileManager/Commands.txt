@@ -3,5 +3,4 @@ del file - delete file
 del dir - delete directory
 crt file - create file
 crt dir - create directory
-exec - execute file
-open - open file
+exe - execute file
