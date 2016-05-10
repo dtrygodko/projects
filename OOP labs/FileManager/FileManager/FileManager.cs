@@ -44,7 +44,7 @@ namespace FileManager
         {
             CurrentDirectory = Directory.GetCurrentDirectory();
 
-            RefreshDrives();
+            SetDrives();
         }
 
         public void RunCommand(string command)
@@ -135,24 +135,24 @@ namespace FileManager
 
         bool IsRoot() => CurrentDirectory.Length == 3 ? true : false;
 
-        void RefreshDrives()
+        void SetDrives()
         {
-            lock(drives)
+            foreach (var drive in DriveInfo.GetDrives().Where(dr => dr.DriveType == DriveType.Fixed || dr.DriveType == DriveType.Removable))
             {
-                drives.Clear();
-
-                foreach (var drive in DriveInfo.GetDrives().Where(dr => dr.DriveType == DriveType.Fixed || dr.DriveType == DriveType.Removable))
-                {
-                    drives.Add(drive.Name.ToLower()[0]);
-                }
+                drives.Add(drive.Name.ToLower()[0]);
             }
         }
 
-        public void RefreshAllDrives()
+        public void RefreshDrives()
         {
             while(true)
             {
-                RefreshDrives();
+                lock (drives)
+                {
+                    drives.Clear();
+
+                    SetDrives();
+                }
 
                 Thread.Sleep(30000);
             }

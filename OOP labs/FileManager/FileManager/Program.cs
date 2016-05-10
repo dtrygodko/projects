@@ -10,7 +10,7 @@ namespace FileManager
         {
             FileManager manager = FileManager.Manager;
 
-            new Thread(new ThreadStart(manager.RefreshAllDrives)).Start();
+            new Thread(new ThreadStart(manager.RefreshDrives)).Start();
 
            while(true)
             {

@@ -74,7 +74,10 @@ namespace FileManager
     {
         protected override void FileOperation(string name)
         {
-            File.Create(FileManager.CurrentDirectory + "\\" + name);
+            using (FileStream fs = File.Create(FileManager.CurrentDirectory + "\\" + name))
+            {
+
+            }
         }
 
         protected override void DirectoryOperation(string name)
