@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.VisualBasic.FileIO;
 
 namespace FileManager
 {
@@ -17,6 +18,8 @@ namespace FileManager
                 {
                     entityName += parts[i] + " ";
                 }
+
+                entityName = entityName.TrimEnd(' ');
             }
             else
             {
@@ -102,16 +105,16 @@ namespace FileManager
         {
             string[] names = text.Split(new string[] {"=>", "->"}, StringSplitOptions.RemoveEmptyEntries);
 
-            string oldName = FileManager.CurrentDirectory + "\\" + GetEntityName(names[0].Split(' '), 3);
-            string newName = FileManager.CurrentDirectory + "\\" + GetEntityName(names[1].Split(' '), 1);
+            string oldName = FileManager.CurrentDirectory + "\\" + GetEntityName(names[0].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), 3);
+            string newName = GetEntityName(names[1].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), 1);
 
             if (names[0].Split(' ')[1] == "dir")
             {
-                Directory.Move(oldName, newName);
+                FileSystem.RenameDirectory(oldName, newName);
             }
             else if (names[0].Split(' ')[1] == "file")
             {
-                File.Move(oldName, newName);
+                FileSystem.RenameFile(oldName, newName);
             }
             else
             {

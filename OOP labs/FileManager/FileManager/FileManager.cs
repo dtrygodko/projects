@@ -75,6 +75,8 @@ namespace FileManager
                 {
                     path += cmdParts[i] + " ";
                 }
+
+                path = path.TrimEnd(' ');
             }
             else
             {
