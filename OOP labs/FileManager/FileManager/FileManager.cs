@@ -27,7 +27,7 @@ namespace FileManager
 
         List<char> drives = new List<char>();
 
-        Dictionary<string, Command> commands = new Dictionary<string, Command>
+        Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>
         {
             {"del", new DeleteEntity() },
             {"crt", new CreateEntity() },
@@ -35,7 +35,7 @@ namespace FileManager
             {"ren", new RenameEntity() }
         };
 
-        public void AddCommand(string abbreviation, Command command)
+        public void AddCommand(string abbreviation, ICommand command)
         {
             commands.Add(abbreviation, command);
         }
@@ -66,22 +66,7 @@ namespace FileManager
 
         public void ChangeDirectory(string longPath)
         {
-            string[] cmdParts = longPath.Split(' ');
-            string path = "";
-
-            if(cmdParts.Length > 2)
-            {
-                for(int i = 1; i < cmdParts.Length; ++i)
-                {
-                    path += cmdParts[i] + " ";
-                }
-
-                path = path.TrimEnd(' ');
-            }
-            else
-            {
-                path = cmdParts[1];
-            }
+            string path = NameCreator.GetName(longPath.Split(' '), 2);
 
             string[] pathParts = path.Split(new string[] { @"\", "/" }, StringSplitOptions.RemoveEmptyEntries);
 

@@ -10,9 +10,10 @@ namespace FileManager
         {
             FileManager manager = FileManager.Manager;
 
-            new Thread(new ThreadStart(manager.RefreshDrives)).Start();
+            Thread refresher = new Thread(new ThreadStart(manager.RefreshDrives));
+            refresher.Start();
 
-           while(true)
+            while(true)
             {
                 try
                 {
@@ -20,7 +21,12 @@ namespace FileManager
 
                     string command = ReadLine();
 
-                    if (command[1] == ':')
+                    if(command.ToLower() == "exit")
+                    {
+                        refresher.Abort();
+                        break;
+                    }
+                    else if (command[1] == ':')
                     {
                         manager.ChangeDrive(command[0]);
                     }

@@ -4,41 +4,20 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace FileManager
 {
-    abstract class Command
+    interface ICommand
     {
-        public abstract void Run(string text);
-
-        protected string GetEntityName(string[] parts, int minLength)
-        {
-            string entityName = "";
-
-            if(parts.Length > minLength)
-            {
-                for(int i = minLength - 1; i < parts.Length; ++i)
-                {
-                    entityName += parts[i] + " ";
-                }
-
-                entityName = entityName.TrimEnd(' ');
-            }
-            else
-            {
-                entityName = parts[minLength - 1];
-            }
-
-            return entityName;
-        }
+        void Run(string text);
     }
 
-    abstract class CreateDelete : Command
+    abstract class CreateDelete : ICommand
     {
-        public override void Run(string text)
+        public void Run(string text)
         {
             string[] parts = text.Split(' ');
 
             if (parts[1] == "file" || parts[1] == "dir")
             {
-                string entityName = GetEntityName(parts, 3);
+                string entityName = NameCreator.GetName(parts, 3);
 
                 if (parts[1] == "file")
                 {
@@ -89,24 +68,24 @@ namespace FileManager
         }
     }
 
-    class ExecuteProgram : Command
+    class ExecuteProgram : ICommand
     {
-        public override void Run(string text)
+        public void Run(string text)
         {
-            string entityName = GetEntityName(text.Split(' '), 2);
+            string entityName = NameCreator.GetName(text.Split(' '), 2);
 
             System.Diagnostics.Process.Start(FileManager.CurrentDirectory + "\\" + entityName);
         }
     }
 
-    class RenameEntity : Command
+    class RenameEntity : ICommand
     {
-        public override void Run(string text)
+        public void Run(string text)
         {
             string[] names = text.Split(new string[] {"=>", "->"}, StringSplitOptions.RemoveEmptyEntries);
 
-            string oldName = FileManager.CurrentDirectory + "\\" + GetEntityName(names[0].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), 3);
-            string newName = GetEntityName(names[1].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), 1);
+            string oldName = FileManager.CurrentDirectory + "\\" + NameCreator.GetName(names[0].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), 3);
+            string newName = NameCreator.GetName(names[1].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), 1);
 
             if (names[0].Split(' ')[1] == "dir")
             {
